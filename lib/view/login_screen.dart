@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:web_app/screens/sign_up_screen.dart';
+import 'package:web_app/view/signup/presentation/sign_up_screen.dart';
 
-import '../db_helper.dart';
+import '../helper/db_helper.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -53,7 +53,7 @@ class LoginScreen extends StatelessWidget {
               TextButton(
                 onPressed: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => SignupScreen()),
+                  MaterialPageRoute(builder: (_) => SignUpScreen()),
                 ),
                 child: Text("Create an Account"),
               ),
