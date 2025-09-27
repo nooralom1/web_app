@@ -16,6 +16,7 @@ class DBHelper {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             email TEXT UNIQUE,
             password TEXT
+            name TEXT
           )
         ''');
       },
@@ -23,9 +24,13 @@ class DBHelper {
     return _db!;
   }
 
-  static Future<int> signup(String email, String password) async {
+  static Future<int> signup(String email, String password, String name) async {
     final db = await initDb();
-    return await db.insert('users', {'email': email, 'password': password});
+    return await db.insert('users', {
+      'email': email,
+      'password': password,
+      "name": name,
+    });
   }
 
   static Future<Map<String, dynamic>?> login(

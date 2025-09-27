@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:web_app/view/signup/presentation/sign_up_screen.dart';
+import 'package:web_app/view/sign_up/presentation/sign_up_screen.dart';
 
 void main() {
   runApp(MyApp());

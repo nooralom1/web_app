@@ -14,7 +14,7 @@ class Background extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage(image ?? "assets/image/background.jpg"),
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
       ),
       child: child,
