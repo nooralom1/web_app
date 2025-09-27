@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:web_app/common_widget/background.dart';
 import 'package:web_app/common_widget/custom_button.dart';
-import 'package:web_app/helper/db_helper.dart';
+import 'package:web_app/helper/database_helper.dart';
 import 'package:web_app/view/home/presentation/home_screen.dart';
 import 'package:web_app/view/sign_up/presentation/sign_up_screen.dart';
 
@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: CustomButton(
                                     onTap: () async {
                                       if (_formKey.currentState!.validate()) {
-                                        var user = await DBHelper.login(
+                                        var user = await DatabaseHelper.login(
                                           emailController.text,
                                           passwordController.text,
                                         );

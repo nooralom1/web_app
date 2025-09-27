@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DBHelper {
+class DatabaseHelper {
   static Database? _db;
 
   static Future<Database> initDb() async {

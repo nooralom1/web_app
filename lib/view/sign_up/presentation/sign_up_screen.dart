@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:web_app/common_widget/background.dart';
 import 'package:web_app/common_widget/custom_button.dart';
-import 'package:web_app/helper/db_helper.dart';
+import 'package:web_app/helper/database_helper.dart';
 import 'package:web_app/view/log_in/presentation/login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -169,9 +169,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     child: CustomButton(
                                       onTap: () async {
                                         final name =
-                                            "${firstNameController.text}${lasttNameController.text}";
+                                            "${firstNameController.text} ${lasttNameController.text}";
                                         if (_formKey.currentState!.validate()) {
-                                          await DBHelper.signup(
+                                          await DatabaseHelper.signup(
                                             emailController.text,
                                             passwordController.text,
                                             name,

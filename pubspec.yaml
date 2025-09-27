@@ -39,7 +39,6 @@ dependencies:
   responsive_framework: ^1.5.1
   sqflite_common_ffi_web: ^1.0.1+1
   flutter_screenutil: ^5.9.3
-  fluttertoast: ^9.0.0
 
 dev_dependencies:
   flutter_test:
