@@ -1,12 +1,16 @@
+// ignore_for_file: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
   static Database? _db;
 
+  /// Initialize database (cross-platform: mobile, desktop, web)
   static Future<Database> initDb() async {
     if (_db != null) return _db!;
+
     String path = join(await getDatabasesPath(), 'auth.db');
+
     _db = await openDatabase(
       path,
       version: 1,
@@ -15,12 +19,13 @@ class DatabaseHelper {
           CREATE TABLE users(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             email TEXT UNIQUE,
-            password TEXT
+            password TEXT,
             name TEXT
           )
         ''');
       },
     );
+
     return _db!;
   }
 
@@ -29,7 +34,7 @@ class DatabaseHelper {
     return await db.insert('users', {
       'email': email,
       'password': password,
-      "name": name,
+      'name': name,
     });
   }
 

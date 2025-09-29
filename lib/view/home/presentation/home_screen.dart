@@ -37,21 +37,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Welcome to the "KLM"',
+                    "Hello ${widget.name}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18.sp,
-                      color: Colors.green,
+                      color: Colors.red,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 20.h),
                   Text(
-                    widget.name,
+                    'Welcome to the "KLM"',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18.sp,
-                      color: Colors.red,
+                      color: Colors.green,
                     ),
                     textAlign: TextAlign.center,
                   ),
