@@ -12,16 +12,12 @@ import 'package:web_app/view/sign_up/presentation/sign_up_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // ✅ Initialize database factory for cross-platform
   if (kIsWeb) {
     databaseFactory = databaseFactoryFfiWeb;
   } else if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
-  // (Android, iOS, macOS use sqflite directly)
-
   runApp(const MyApp());
 }
 

@@ -18,14 +18,16 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController firstNameController = TextEditingController();
-  TextEditingController lasttNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String errorMessage = '';
+
   @override
   void dispose() {
     firstNameController.dispose();
-    lasttNameController.dispose();
+    lastNameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -49,14 +51,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Container(
                           height: 600.h,
                           decoration: BoxDecoration(
-                            color: Colors.blue.withValues(alpha: 0.2),
+                            color: Colors.blue.withOpacity(0.2),
                           ),
                           child: ClipRect(
                             child: BackdropFilter(
                               filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withValues(alpha: 0.1),
+                                  color: Colors.black.withOpacity(0.1),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -93,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       "Create your KLM account",
                                       style: TextStyle(
                                         color: Colors.blue,
-                                        fontSize: 8.sp,
+                                        fontSize: 18.sp, // Updated font size
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -114,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                   SizedBox(height: 16.h),
                                   TextFormField(
-                                    controller: lasttNameController,
+                                    controller: lastNameController,
                                     decoration: InputDecoration(
                                       labelText: "Last name *",
                                     ),
@@ -162,6 +164,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     },
                                   ),
                                   SizedBox(height: 50.h),
+                                  if (errorMessage.isNotEmpty)
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 25.w,
+                                      ),
+                                      child: Text(
+                                        errorMessage,
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal: 25.w,
@@ -169,28 +185,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     child: CustomButton(
                                       onTap: () async {
                                         final name =
-                                            "${firstNameController.text} ${lasttNameController.text}";
+                                            "${firstNameController.text} ${lastNameController.text}";
                                         if (_formKey.currentState!.validate()) {
-                                          await DatabaseHelper.signup(
-                                            emailController.text,
-                                            passwordController.text,
-                                            name,
-                                          );
+                                          // Save data to DB
+                                          int result =
+                                              await DatabaseHelper.signup(
+                                                emailController.text,
+                                                passwordController.text,
+                                                name,
+                                              );
 
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              content: Text("Signup Success"),
-                                            ),
-                                          );
+                                          if (result == -1) {
+                                            setState(() {
+                                              errorMessage =
+                                                  "Email already used.";
+                                            });
+                                          } else {
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: Text("Signup Success"),
+                                              ),
+                                            );
 
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (_) => LoginScreen(),
-                                            ),
-                                          );
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) => LoginScreen(),
+                                              ),
+                                            );
+                                          }
                                         }
                                       },
                                       text: "Signup",
@@ -201,7 +226,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          "Already have a account?  ",
+                                          "Already have an account?  ",
                                         ),
                                       ),
                                       GestureDetector(
@@ -220,6 +245,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       ),
                                     ],
                                   ),
+                                  SizedBox(height: 30.h),
                                 ],
                               ),
                             ),

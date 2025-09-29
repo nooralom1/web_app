@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -21,6 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String errorMessage = '';
+
   @override
   void dispose() {
     emailController.dispose();
@@ -46,14 +46,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Container(
                           height: 600.h,
                           decoration: BoxDecoration(
-                            color: Colors.blue.withValues(alpha: 0.2),
+                            color: Colors.blue.withOpacity(0.2),
                           ),
                           child: ClipRect(
                             child: BackdropFilter(
                               filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withValues(alpha: 0.1),
+                                  color: Colors.black.withOpacity(0.1),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -86,10 +86,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 SizedBox(height: 24.h),
                                 Center(
                                   child: Text(
-                                    "Create your KLM account",
+                                    "Login to your account",
                                     style: TextStyle(
                                       color: Colors.blue,
-                                      fontSize: 8.sp,
+                                      fontSize: 18.sp,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -130,6 +130,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                 ),
                                 SizedBox(height: 50.h),
+                                if (errorMessage.isNotEmpty)
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 25.w,
+                                    ),
+                                    child: Text(
+                                      errorMessage,
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 25.w,
@@ -151,15 +165,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                             ),
                                           );
                                         } else {
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                "Invalid credentials",
-                                              ),
-                                            ),
-                                          );
+                                          setState(() {
+                                            errorMessage =
+                                                "Invalid credentials";
+                                          });
                                         }
                                       }
                                     },
